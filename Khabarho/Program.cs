@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Khabarho.Db;
-using Khabarho.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -15,7 +11,7 @@ namespace Khabarho
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
             
@@ -25,7 +21,8 @@ namespace Khabarho
                 try
                 {
                     var context = services.GetRequiredService<DataContext>();
-                    context.Database.Migrate();
+            
+                    await context.Database.MigrateAsync();
                 }
                 catch (Exception ex)
                 {
