@@ -1,5 +1,7 @@
+using System;
 using Khabarho.Db;
 using Khabarho.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -23,9 +25,32 @@ namespace Khabarho
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+            
+            services.AddIdentity<User, IdentityRole>(option =>
+                {
+                    option.User.AllowedUserNameCharacters = null;
+                }).AddRoleManager<RoleManager<IdentityRole>>()
+                .AddUserManager<UserManager<User>>()
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
+            
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            services.AddAuthorization();
+            
+            services.Configure<IdentityOptions>(option =>
+            {
+                option.Password.RequireNonAlphanumeric = false;
+            });
+
+            services.ConfigureApplicationCookie(option =>
+            {
+                option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                option.SlidingExpiration = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

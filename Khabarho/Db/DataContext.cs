@@ -10,6 +10,12 @@ namespace Khabarho.Db
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
+
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Type> Types { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
