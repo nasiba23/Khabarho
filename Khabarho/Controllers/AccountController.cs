@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Khabarho.Models;
+using Khabarho.Utilities;
 using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,10 +9,10 @@ namespace Khabarho.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<User> _userManager;
+        private CustomUserManager<User> _userManager;
         private SignInManager<User> _signInManager;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(CustomUserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

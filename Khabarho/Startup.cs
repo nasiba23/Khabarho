@@ -1,6 +1,7 @@
 using System;
 using Khabarho.Db;
 using Khabarho.Models;
+using Khabarho.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +34,7 @@ namespace Khabarho
                 {
                     option.User.AllowedUserNameCharacters = null;
                 }).AddRoleManager<RoleManager<IdentityRole>>()
-                .AddUserManager<UserManager<User>>()
+                .AddUserManager<CustomUserManager<User>>()
                 .AddEntityFrameworkStores<DataContext>()
                 .AddDefaultTokenProviders();
             
