@@ -9,9 +9,6 @@ namespace Khabarho.Models
 {
     public class Post : Base
     {
-        [Required]
-        public string Title { get; set; }
-        
         public string AuthorId { get; set; }
         
         public DateTime CreatedDate { get; set; }

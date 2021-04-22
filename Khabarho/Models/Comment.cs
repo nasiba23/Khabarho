@@ -5,6 +5,5 @@ namespace Khabarho.Models
 {
     public class Comment : BaseReaction
     {
-        public DateTime? UpdatedDate { get; set; }
     }
 }
