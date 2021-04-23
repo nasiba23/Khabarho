@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Khabarho.Db;
 using Khabarho.Models;
 using Microsoft.EntityFrameworkCore;
+using Khabarho.Extensions;
+using Khabarho.Utilities;
 
 namespace Khabarho.Repositories
 {
@@ -12,10 +14,7 @@ namespace Khabarho.Repositories
     {
         private readonly DataContext _context;
         private readonly DbSet<T> _table;
-
-        private const string NotFoundError = "Упс, что-то пошло не так. Попробуйте снова :)";
-        private const string NullParameterError = "Упс, что-то пошло не так. Попробуйте снова :)";
-
+        
         public BaseRepository(DataContext context)
         {
             _context = context;
@@ -26,38 +25,26 @@ namespace Khabarho.Repositories
         {
             var result = await _table.ToListAsync();
 
-            if (!result.Any())
-            {
-                throw new ArgumentNullException(null, NotFoundError);
-            }
+            result.NullCheck(ErrorMessages.NotFoundError);
             
             return result;
         }
 
         public async Task<T> Get(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
+            id.NullCheck(ErrorMessages.NullParameterError);
             
             var result = await _table.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(id)));
 
-            if (result == null)
-            {
-                throw new ArgumentNullException(null, NotFoundError);
-            }
+            result.NullCheck(ErrorMessages.NotFoundError);
 
             return result;
         }
 
         public async Task<bool> InsertAsync(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
-
+            entity.NullCheck(ErrorMessages.NullParameterError);
+            
             await _table.AddAsync(entity);
             var result = await _context.SaveChangesAsync();
 
@@ -66,10 +53,7 @@ namespace Khabarho.Repositories
 
         public async Task<bool> UpdateAsync(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
+            entity.NullCheck(ErrorMessages.NullParameterError);
             
             entity.UpdatedDate = DateTime.Now;
             _table.Update(entity);
@@ -86,10 +70,7 @@ namespace Khabarho.Repositories
         /// <exception cref="ArgumentNullException">Null parameter</exception>
         public async Task<bool> DeleteAsync(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
+            entity.NullCheck(ErrorMessages.NullParameterError);
 
             entity.IsDeleted = true;
             entity.DeletedDate = DateTime.Now;
