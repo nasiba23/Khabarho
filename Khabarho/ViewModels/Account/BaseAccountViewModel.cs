@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Khabarho.ViewModels
+namespace Khabarho.ViewModels.Account
 {
-    public class LoginViewModel
+    public abstract class BaseAccountViewModel
     {
         [Required]
         [Display(Name = "Никнейм")]
@@ -12,10 +12,5 @@ namespace Khabarho.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }
-        
-        [Display(Name = "Запомнить?")]
-        public bool RememberMe { get; set; }
-        
-        public string ReturnUrl { get; set; }
     }
 }

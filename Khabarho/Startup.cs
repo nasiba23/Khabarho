@@ -1,6 +1,8 @@
 using System;
 using Khabarho.Db;
 using Khabarho.Models;
+using Khabarho.Models.AccountModels;
+using Khabarho.Services;
 using Khabarho.Utilities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +54,8 @@ namespace Khabarho
                 option.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                 option.SlidingExpiration = true;
             });
+            
+            services.InitService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Khabarho.Models
+namespace Khabarho.Models.PostModels
 {
     public class Comment : BaseReaction
     {

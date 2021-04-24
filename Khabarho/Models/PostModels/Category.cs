@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
-namespace Khabarho.Models
+namespace Khabarho.Models.PostModels
 {
     public class Category : Base
     {

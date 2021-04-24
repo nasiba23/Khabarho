@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Khabarho.Models;
+using Khabarho.Models.AccountModels;
 using Khabarho.Utilities;
 using Khabarho.ViewModels;
+using Khabarho.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

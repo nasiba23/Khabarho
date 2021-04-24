@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Khabarho.Db;
-using Khabarho.Models;
 using Microsoft.EntityFrameworkCore;
 using Khabarho.Extensions;
+using Khabarho.Models.PostModels;
 using Khabarho.Utilities;
 
 namespace Khabarho.Repositories
@@ -24,26 +24,25 @@ namespace Khabarho.Repositories
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             var result = await _table.ToListAsync();
+            result.CustomNullCheck(ErrorMessages.NotFoundError);
 
-            result.NullCheck(ErrorMessages.NotFoundError);
-            
             return result;
         }
 
         public async Task<T> Get(string id)
         {
-            id.NullCheck(ErrorMessages.NullParameterError);
+            id.CustomNullCheck(ErrorMessages.NullParameterError);
             
             var result = await _table.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(id)));
 
-            result.NullCheck(ErrorMessages.NotFoundError);
+            result.CustomNullCheck(ErrorMessages.NotFoundError);
 
             return result;
         }
 
         public async Task<bool> InsertAsync(T entity)
         {
-            entity.NullCheck(ErrorMessages.NullParameterError);
+            entity.CustomNullCheck(ErrorMessages.NullParameterError);
             
             await _table.AddAsync(entity);
             var result = await _context.SaveChangesAsync();
@@ -53,7 +52,7 @@ namespace Khabarho.Repositories
 
         public async Task<bool> UpdateAsync(T entity)
         {
-            entity.NullCheck(ErrorMessages.NullParameterError);
+            entity.CustomNullCheck(ErrorMessages.NullParameterError);
             
             entity.UpdatedDate = DateTime.Now;
             _table.Update(entity);
@@ -70,7 +69,7 @@ namespace Khabarho.Repositories
         /// <exception cref="ArgumentNullException">Null parameter</exception>
         public async Task<bool> DeleteAsync(T entity)
         {
-            entity.NullCheck(ErrorMessages.NullParameterError);
+            entity.CustomNullCheck(ErrorMessages.NullParameterError);
 
             entity.IsDeleted = true;
             entity.DeletedDate = DateTime.Now;

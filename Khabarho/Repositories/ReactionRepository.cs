@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Khabarho.Db;
 using Khabarho.Models;
+using Khabarho.Models.PostModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Khabarho.Repositories
@@ -60,7 +61,7 @@ namespace Khabarho.Repositories
 
             await _table.AddAsync(entity);
             var result = await _context.SaveChangesAsync();
-
+            
             return result > 0;
         }
 

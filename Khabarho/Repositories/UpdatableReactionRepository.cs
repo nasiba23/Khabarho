@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Khabarho.Db;
 using Khabarho.Models;
+using Khabarho.Models.PostModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Khabarho.Repositories

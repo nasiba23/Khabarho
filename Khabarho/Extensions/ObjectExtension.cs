@@ -5,7 +5,7 @@ namespace Khabarho.Extensions
 {
     public static class ObjectExtension
     {
-        public static void NullCheck(this object obj, string errorMessage)
+        public static void CustomNullCheck(this object obj, string errorMessage)
         {
             if (obj == null)
             {

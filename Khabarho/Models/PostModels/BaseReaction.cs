@@ -1,7 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Khabarho.Models.AccountModels;
 
-namespace Khabarho.Models
+namespace Khabarho.Models.PostModels
 {
     public abstract class BaseReaction
     {

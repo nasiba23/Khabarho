@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Khabarho.Models;
+using Khabarho.Models.PostModels;
 
 namespace Khabarho.Repositories
 {

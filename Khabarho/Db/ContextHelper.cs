@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Khabarho.Models;
+using Khabarho.Models.AccountModels;
+using Khabarho.Models.PostModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace Khabarho.Db
@@ -58,10 +59,10 @@ namespace Khabarho.Db
 
             if (!db.Types.Any())
             {
-                var types = new List<Models.Type>
+                var types = new List<Models.PostModels.Type>
                 {
-                    new Models.Type {Id = Guid.NewGuid(), Title = "Статьи"},
-                    new Models.Type {Id = Guid.NewGuid(), Title = "Новости"},
+                    new Models.PostModels.Type {Id = Guid.NewGuid(), Title = "Статьи"},
+                    new Models.PostModels.Type {Id = Guid.NewGuid(), Title = "Новости"},
                 };
 
                 await db.Types.AddRangeAsync(types);

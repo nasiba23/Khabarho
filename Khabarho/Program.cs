@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Khabarho.Db;
 using Khabarho.Models;
+using Khabarho.Models.AccountModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

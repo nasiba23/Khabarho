@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Khabarho.Models.AccountModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
-namespace Khabarho.Models
+namespace Khabarho.Models.PostModels
 {
     public class Post : Base
     {

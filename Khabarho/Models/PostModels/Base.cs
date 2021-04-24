@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Khabarho.Models
+namespace Khabarho.Models.PostModels
 {
     public abstract class Base
     {

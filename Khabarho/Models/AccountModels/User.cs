@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Khabarho.Models.PostModels;
 using Microsoft.AspNetCore.Identity;
 
-namespace Khabarho.Models
+namespace Khabarho.Models.AccountModels
 {
     public class User: IdentityUser
     {
