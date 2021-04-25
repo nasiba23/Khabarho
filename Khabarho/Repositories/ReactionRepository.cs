@@ -35,7 +35,7 @@ namespace Khabarho.Repositories
             return result;
         }
 
-        public async Task<T> Get(string id)
+        public async Task<T> GetAsync(string id)
         {
             if (string.IsNullOrEmpty(id))
             {

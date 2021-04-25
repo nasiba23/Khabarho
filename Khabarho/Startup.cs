@@ -1,5 +1,6 @@
 using System;
 using Khabarho.Db;
+using Khabarho.Extensions;
 using Khabarho.Models;
 using Khabarho.Models.AccountModels;
 using Khabarho.Services;
