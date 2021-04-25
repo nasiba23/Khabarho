@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Khabarho.ViewModels.Post
+namespace Khabarho.ViewModels.PostViewModels
 {
     public class PostViewModel : BasePostViewModel
     {

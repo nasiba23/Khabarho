@@ -33,8 +33,8 @@ namespace Khabarho.Repositories
         {
             id.CustomNullCheck(ErrorMessages.NullParameterError);
             
-            var result = await _table.Where(x => x.Id.Equals(Guid.Parse(id)) && x.IsDeleted == false).FirstOrDefaultAsync();
-
+            var result = await _table.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(id)) && x.IsDeleted == false);
+            
             result.CustomNullCheck(ErrorMessages.NotFoundError);
 
             return result;

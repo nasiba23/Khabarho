@@ -16,4 +16,10 @@
       </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\CommentService" />
+      <Folder Include="Services\LikeService" />
+      <Folder Include="Services\TypeService" />
+    </ItemGroup>
+
 </Project>

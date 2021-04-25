@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Khabarho.Models.PostModels;
-using Khabarho.ViewModels.Post;
+using Khabarho.ViewModels.PostViewModels;
 
-namespace Khabarho.Services.Posts
+namespace Khabarho.Services.PostService
 {
     public interface IPostService
     {

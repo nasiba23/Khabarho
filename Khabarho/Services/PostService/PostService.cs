@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
-using Khabarho.ViewModels.Post;
+using Khabarho.ViewModels.PostViewModels;
 using Microsoft.Extensions.Logging;
 
-namespace Khabarho.Services.Posts
+namespace Khabarho.Services.PostService
 {
     public class PostService : IPostService
     {
@@ -65,19 +66,19 @@ namespace Khabarho.Services.Posts
 
         public async Task<List<ShowPostViewModel>> GetAllAsync()
         {
-            var showPostViewModels = new List<ShowPostViewModel>();
+            var showPostsViewModel = new List<ShowPostViewModel>();
             
             try
             {
                 var posts = await _repo.GetAllAsync();
-                showPostViewModels = _mapper.Map<List<ShowPostViewModel>>(posts);
+                showPostsViewModel = posts.Select(c=> _mapper.Map<ShowPostViewModel>(c)).ToList();;
             }
             catch (Exception e)
             {
                 _logger.LogInformation(e.Message);
             }
 
-            return showPostViewModels;
+            return showPostsViewModel;
         }
 
         public  async Task<ShowPostViewModel> UpdateAsync(PostViewModel model)

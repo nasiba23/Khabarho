@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Khabarho.Models.PostModels;
 
-namespace Khabarho.ViewModels.Post
+namespace Khabarho.ViewModels.PostViewModels
 {
     public class ShowPostViewModel : BasePostViewModel
     {
