@@ -23,17 +23,17 @@ namespace Khabarho.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var result = await _table.ToListAsync();
+            var result = await _table.Where(x => x.IsDeleted == false).ToListAsync();
             result.CustomNullCheck(ErrorMessages.NotFoundError);
 
             return result;
         }
 
-        public async Task<T> Get(string id)
+        public async Task<T> GetAsync(string id)
         {
             id.CustomNullCheck(ErrorMessages.NullParameterError);
             
-            var result = await _table.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(id)));
+            var result = await _table.Where(x => x.Id.Equals(Guid.Parse(id)) && x.IsDeleted == false).FirstOrDefaultAsync();
 
             result.CustomNullCheck(ErrorMessages.NotFoundError);
 

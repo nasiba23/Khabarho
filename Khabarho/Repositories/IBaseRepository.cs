@@ -10,7 +10,7 @@ namespace Khabarho.Repositories
     public interface IBaseRepository<T> where T : Base
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<T> Get(string id);
+        Task<T> GetAsync(string id);
         Task<bool> InsertAsync(T entity);
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(T entity);
