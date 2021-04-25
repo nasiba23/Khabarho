@@ -30,6 +30,7 @@ namespace Khabarho.Services.LikeService
             
             try
             {
+                model.CreatedDate = DateTime.Now;
                 var like = _mapper.Map<Like>(model);
                 var result = await _repo.InsertAsync(like);
                 

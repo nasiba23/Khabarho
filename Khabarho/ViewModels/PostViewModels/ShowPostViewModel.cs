@@ -8,6 +8,8 @@ namespace Khabarho.ViewModels.PostViewModels
         public string AuthorName { get; set; }
         
         public List<Category> Categories { get; set; }
+
+        public Type Type { get; set; }
         
         public List<Comment> Comments { get; set; }
         

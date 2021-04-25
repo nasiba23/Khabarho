@@ -61,8 +61,8 @@ namespace Khabarho.Db
             {
                 var types = new List<Models.PostModels.Type>
                 {
-                    new Models.PostModels.Type {Id = Guid.NewGuid(), Title = "Статьи"},
-                    new Models.PostModels.Type {Id = Guid.NewGuid(), Title = "Новости"},
+                    new Models.PostModels.Type {Id = Guid.NewGuid(), Title = "Статья"},
+                    new Models.PostModels.Type {Id = Guid.NewGuid(), Title = "Новость"},
                 };
 
                 await db.Types.AddRangeAsync(types);

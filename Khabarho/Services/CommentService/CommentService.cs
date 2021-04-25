@@ -31,6 +31,7 @@ namespace Khabarho.Services.CommentService
             
             try
             {
+                model.CreatedDate = DateTime.Now;
                 var comment = _mapper.Map<Comment>(model);
                 var result = await _reactionRepo.InsertAsync(comment);
                 

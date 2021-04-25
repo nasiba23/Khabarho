@@ -9,6 +9,8 @@ namespace Khabarho.ViewModels.TypeViewModels
     {
         public Guid Id { get; set; }
         
+        public DateTime CreatedDate  {get; set; }
+
         [Required]
         public string Title { get; set; }
         

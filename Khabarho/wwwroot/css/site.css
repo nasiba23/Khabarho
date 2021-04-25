@@ -69,3 +69,11 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.require {
+  color: #666;
+}
+label small {
+  color: #999;
+  font-weight: normal;
+}

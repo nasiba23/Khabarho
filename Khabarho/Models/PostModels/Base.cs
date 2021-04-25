@@ -10,6 +10,8 @@ namespace Khabarho.Models.PostModels
         [Required]
         public string Title { get; set; }
         
+        public DateTime CreatedDate  {get; set; }
+
         public DateTime? UpdatedDate { get; set; }
         
         public bool IsDeleted { get; set; }

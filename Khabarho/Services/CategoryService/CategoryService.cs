@@ -30,6 +30,7 @@ namespace Khabarho.Services.CategoryService
             
             try
             {
+                model.CreatedDate = DateTime.Now;
                 var category = _mapper.Map<Category>(model);
                 var result = await _repo.InsertAsync(category);
                 

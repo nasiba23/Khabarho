@@ -14,7 +14,7 @@ namespace Khabarho.Services
             this.CreateMap<Post, PostViewModel>()
                 .ForMember(m => m.Id,
                     option => option.MapFrom(m => m.Id))
-                .ForMember(m => m.Types,
+                .ForMember(m => m.Type,
                     option => option.Ignore())
                 .ForMember(m => m.TypeId,
                     option => option.MapFrom(m => m.TypeId))
@@ -45,8 +45,10 @@ namespace Khabarho.Services
                     option => option.MapFrom(m => m.Image))
                 .ForMember(m => m.Title,
                     option => option.MapFrom(m => m.Title))
+                .ForMember(m => m.Type,
+                    option => option.MapFrom(m => m.Type))
                 .ForMember(m => m.Categories,
-                    option => option.Ignore())
+                    option => option.MapFrom(m => m.Categories))
                 .ForMember(m => m.AuthorName,
                     option => option.MapFrom(m => m.Author))
                 .ForMember(m => m.Comments,
@@ -60,6 +62,8 @@ namespace Khabarho.Services
             this.CreateMap<Category, CategoryViewModel>()
                 .ForMember(m => m.Id,
                     option => option.MapFrom(m => m.Id))
+                .ForMember(m => m.CreatedDate,
+                    option => option.MapFrom(m => m.CreatedDate))
                 .ForMember(m => m.Title,
                     option => option.MapFrom(m => m.Title))
                 .ForMember(m => m.Posts,
@@ -69,6 +73,8 @@ namespace Khabarho.Services
             this.CreateMap<Type, TypeViewModel>()
                 .ForMember(m => m.Id,
                     option => option.MapFrom(m => m.Id))
+                .ForMember(m => m.CreatedDate,
+                    option => option.MapFrom(m => m.CreatedDate))
                 .ForMember(m => m.Title,
                     option => option.MapFrom(m => m.Title))
                 .ForMember(m => m.Posts,
@@ -78,6 +84,10 @@ namespace Khabarho.Services
             this.CreateMap<Comment, CommentViewModel>()
                 .ForMember(m => m.Id,
                     option => option.MapFrom(m => m.Id))
+                .ForMember(m => m.CreatedDate,
+                    option => option.MapFrom(m => m.CreatedDate))
+                .ForMember(m => m.Text,
+                    option => option.MapFrom(m => m.Text))
                 .ForMember(m => m.UserId,
                     option => option.MapFrom(m => m.UserId))
                 .ForMember(m => m.UserName,
@@ -89,6 +99,8 @@ namespace Khabarho.Services
             this.CreateMap<Like, LikeViewModel>()
                 .ForMember(m => m.Id,
                     option => option.MapFrom(m => m.Id))
+                .ForMember(m => m.CreatedDate,
+                    option => option.MapFrom(m => m.CreatedDate))
                 .ForMember(m => m.UserId,
                     option => option.MapFrom(m => m.UserId))
                 .ForMember(m => m.UserName,

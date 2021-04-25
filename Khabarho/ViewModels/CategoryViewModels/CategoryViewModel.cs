@@ -11,6 +11,8 @@ namespace Khabarho.ViewModels.CategoryViewModels
         
         [Required]
         public string Title { get; set; }
+
+        public DateTime CreatedDate { get; set; }
         
         public List<Post> Posts { get; set; }
     }

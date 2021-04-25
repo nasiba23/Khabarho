@@ -29,6 +29,7 @@ namespace Khabarho.Services.TypeService
             
             try
             {
+                model.CreatedDate = DateTime.UtcNow;
                 var type = _mapper.Map<Type>(model);
                 var result = await _repo.InsertAsync(type);
                 

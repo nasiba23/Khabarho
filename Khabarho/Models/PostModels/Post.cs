@@ -12,8 +12,6 @@ namespace Khabarho.Models.PostModels
     {
         public string AuthorId { get; set; }
         
-        public DateTime CreatedDate { get; set; }
-        
         [Required]
         public Guid TypeId { get; set; }
         
