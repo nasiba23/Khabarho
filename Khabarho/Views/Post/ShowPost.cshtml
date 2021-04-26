@@ -1,7 +1,5 @@
-﻿@using Khabarho.Models.PostModels
-@using Khabarho.Extensions
-@using Khabarho.Utilities
-@using Khabarho.ViewModels.PostViewModels
+﻿@using Khabarho.ViewModels.PostViewModels
+@using System.Security.Claims
 
 @{
     ViewBag.Title = "title";
@@ -55,12 +53,58 @@
         {
             <div class="d-flex flex-column">
                 <div>
-                    <b>@comment.User.UserName</b><span>  @comment.CreatedDate</span>
-                    <p>
-                        @comment.Text
-                    </p>
+                    <form id="formComment">
+                        <b>@comment.User.UserName</b><span> @comment.CreatedDate</span>
+                        <p>
+                            @comment.Text
+                        </p>    
+                        <input id="textComment" value="@comment.Text" type="hidden"/>
+                        
+                        @if (comment.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                        {
+                            <input id="commentId" value="@comment.Id" type="hidden"/>
+                            <input id="userId" value="@comment.UserId" type="hidden"/>
+                            <input id="postId" value="@comment.PostId" type="hidden"/>
+                            <div class="mt-2 text-right">
+                                <button class="btn btn-primary btn-sm shadow-none fa fa-pencil" type="submit"></button>
+                            </div>
+                            <div class="mt-2 text-right">
+                                <button class="btn btn-primary btn-sm shadow-none fa fa-trash" type="submit" onclick="DeleteComment()"></button>
+                            </div>
+                        }
+                    </form>
                 </div>
             </div>
         }
     </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+    function DeleteComment() {
+           const id = $("#commentId").val();
+           const userId = $("#userId").val();
+           const postId = $("#postId").val();
+           const text =  $("#textComment").val();
+           const commentModel = {
+             id : id,
+             userId : userId,
+             postId : postId,
+             text : text,
+           };
+            $.ajax({
+                type:"post",
+                url: "/Comment/DeleteComment",
+                dataType : "json",
+                data : {model : commentModel},
+                success : function (result, status, xhr) {
+                console.log(result);
+                },
+                error : function(xhr, status, error) {
+                console.log(xhr);
+                }      
+             })
+           }
+    </script>
+}
 }

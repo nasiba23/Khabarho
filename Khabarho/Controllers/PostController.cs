@@ -66,7 +66,7 @@ namespace Khabarho.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-
+            
             ViewBag.Post = model;
             
             return View();

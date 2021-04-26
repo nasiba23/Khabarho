@@ -58,6 +58,16 @@ namespace Khabarho
             });
             
             services.InitService();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("My_CORS_Policy",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .Build()
+                );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +91,8 @@ namespace Khabarho
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseCors("My_CORS_Policy");
 
             app.UseEndpoints(endpoints =>
             {

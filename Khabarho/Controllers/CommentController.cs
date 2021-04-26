@@ -31,5 +31,22 @@ namespace Khabarho.Controllers
             
             return RedirectToAction("ShowPost", "Post", new {id = model.PostId});
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("~/Comment/DeleteComment")]
+        public async Task<IActionResult> DeleteComment(CommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ShowPost", "Post");
+            }
+            
+            model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _commentService.DeleteAsync(model.Id.ToString());
+            
+            return RedirectToAction("ShowPost", "Post", new {id = model.PostId});
+        }
     }
 }
