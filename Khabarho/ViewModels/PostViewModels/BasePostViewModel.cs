@@ -5,9 +5,9 @@ namespace Khabarho.ViewModels.PostViewModels
 {
     public abstract class BasePostViewModel
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         
         [Required]
         public string Title { get; set; }

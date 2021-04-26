@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Khabarho.Db;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
 using Khabarho.ViewModels.CommentViewModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Khabarho.Services.CommentService
@@ -16,13 +18,16 @@ namespace Khabarho.Services.CommentService
         private IUpdatableReactionRepository<Comment> _updatableRepo;
         private IMapper _mapper;
         private ILogger<CommentService> _logger;
+        private DataContext _context;
 
-        public CommentService(IReactionRepository<Comment> reactionRepo, IUpdatableReactionRepository<Comment> updatableRepo, IMapper mapper, ILogger<CommentService> logger)
+        public CommentService(IReactionRepository<Comment> reactionRepo, IUpdatableReactionRepository<Comment> updatableRepo,
+            IMapper mapper, ILogger<CommentService> logger, DataContext context)
         {
             _reactionRepo = reactionRepo;
             _updatableRepo = updatableRepo;
             _mapper = mapper;
             _logger = logger;
+            _context = context;
         }
         
         public async Task<CommentViewModel> CreateAsync(CommentViewModel model)
@@ -32,7 +37,9 @@ namespace Khabarho.Services.CommentService
             try
             {
                 model.CreatedDate = DateTime.Now;
+                
                 var comment = _mapper.Map<Comment>(model);
+                comment.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == model.UserId);
                 var result = await _reactionRepo.InsertAsync(comment);
                 
                 if (!result)

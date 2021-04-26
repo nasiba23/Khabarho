@@ -56,5 +56,20 @@ namespace Khabarho.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ShowPost(string id)
+        {
+            var model = await _postService.GetAsync(id);
+            
+            if (model.Id == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            ViewBag.Post = model;
+            
+            return View();
+        }
     }
 }

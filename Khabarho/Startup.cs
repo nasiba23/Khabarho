@@ -31,7 +31,8 @@ namespace Khabarho
             services.AddControllersWithViews();
             
             services.AddDbContext<DataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("Default")));
+                options.UseSqlServer(Configuration.GetConnectionString("Default"))
+                       .UseLazyLoadingProxies());
             
             services.AddIdentity<User, IdentityRole>(option =>
                 {

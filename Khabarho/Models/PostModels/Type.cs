@@ -6,6 +6,6 @@ namespace Khabarho.Models.PostModels
 {
     public class Type : Base
     {
-        public ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

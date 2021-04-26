@@ -15,7 +15,7 @@ namespace Khabarho.Services
                 .ForMember(m => m.Id,
                     option => option.MapFrom(m => m.Id))
                 .ForMember(m => m.Type,
-                    option => option.Ignore())
+                    option => option.MapFrom(m => m.Type))
                 .ForMember(m => m.TypeId,
                     option => option.MapFrom(m => m.TypeId))
                 .ForMember(m => m.CreatedDate,
@@ -50,13 +50,13 @@ namespace Khabarho.Services
                 .ForMember(m => m.Categories,
                     option => option.MapFrom(m => m.Categories))
                 .ForMember(m => m.AuthorName,
-                    option => option.MapFrom(m => m.Author))
+                    option => option.MapFrom(m => m.Author.UserName))
                 .ForMember(m => m.Comments,
-                            option => option.Ignore())
+                            option => option.MapFrom(m => m.Comments))
                 .ForMember(m => m.NumberOfComments,
-                    option => option.Ignore())
+                    option => option.MapFrom(m => m.NumberOfComments))
                 .ForMember(m => m.NumberOfLikes,
-                    option => option.Ignore())
+                    option => option.MapFrom(m => m.NumberOfLikes))
                 .ReverseMap();
 
             this.CreateMap<Category, CategoryViewModel>()

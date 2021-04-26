@@ -1,0 +1,66 @@
+﻿@using Khabarho.Models.PostModels
+@using Khabarho.Extensions
+@using Khabarho.Utilities
+@using Khabarho.ViewModels.PostViewModels
+
+@{
+    ViewBag.Title = "title";
+    var post = ViewBag.Post as ShowPostViewModel;
+    Layout = "_Layout";
+    ViewData["PostId"] = post?.Id;
+}
+
+@if (post != null)
+{
+    <div>
+        <header>
+            <a href="">
+                <span>@post.AuthorName</span>
+            </a>
+            <span>@post.CreatedDate</span>
+        </header>
+        <h1>
+            <span>@post.Title</span>
+        </h1>
+        <ul class="d-flex p-0" style="list-style: none">
+            @if (post.Categories != null)
+            {
+                @foreach (var category in post.Categories)
+                {
+                    <li class="mr-2">
+                        <a href="">@category.Title</a>
+                    </li>
+                }
+            }
+        </ul>
+        <figure>
+            <img src="~/images/@post.ImagePath"/>
+        </figure>
+        <div>
+            @post.Text
+        </div>
+        <br>
+        <h5>Нравится @post.NumberOfLikes людям</h5>
+        <br>
+        <div class="bg-white">
+            <div class="d-flex flex-row fs-12 mb-1">
+                <div class="like cursor"><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="ml-1">Лайк</span></div>
+                <div class="like cursor ml-2"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="ml-1">Комментарий</span></div>
+            </div>
+            @await Html.PartialAsync("~/Views/Comment/CreateComment.cshtml", ViewData)
+        </div>
+        <h4>Комментарии @post.NumberOfComments</h4>
+        <br>
+        @foreach (var comment in post.Comments)
+        {
+            <div class="d-flex flex-column">
+                <div>
+                    <b>@comment.User.UserName</b><span>  @comment.CreatedDate</span>
+                    <p>
+                        @comment.Text
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -47,11 +47,12 @@ namespace Khabarho.Services.PostService
 
                 if (model.ImageFile != null)
                 {
-                    imagePath = await CopyFile(model.ImageFile);
+                    imagePath = await CopyFileAsync(model.ImageFile);
                 }
                 
                 model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
                 model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
+                
                 var post = _mapper.Map<Post>(model);
                 
                 post.Image = imagePath ?? "";
@@ -80,6 +81,7 @@ namespace Khabarho.Services.PostService
             try
             { 
                 var post = await _repo.GetAsync(id);
+                
                 showPostViewModel = _mapper.Map<ShowPostViewModel>(post);
             }
             catch (Exception e)
@@ -97,6 +99,7 @@ namespace Khabarho.Services.PostService
             try
             {
                 var posts = await _repo.GetAllAsync();
+
                 showPostsViewModel = posts.Select(c=> _mapper.Map<ShowPostViewModel>(c)).ToList();;
             }
             catch (Exception e)
@@ -147,7 +150,7 @@ namespace Khabarho.Services.PostService
             return result;
         }
         
-        private async Task<string> CopyFile(IFormFile imageFile)
+        private async Task<string> CopyFileAsync(IFormFile imageFile)
         {
             if (imageFile == null) return null;
 

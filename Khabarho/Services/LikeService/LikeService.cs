@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Khabarho.Db;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
 using Khabarho.ViewModels.LikeViewModels;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Type = Khabarho.Models.PostModels.Type;
 
@@ -16,11 +18,14 @@ namespace Khabarho.Services.LikeService
         private IReactionRepository<Like> _repo;
         private IMapper _mapper;
         private ILogger<LikeService> _logger;
+        private DataContext _context;
 
-        public LikeService(IReactionRepository<Like> repo, IMapper mapper, ILogger<LikeService> logger)
+        public LikeService(IReactionRepository<Like> repo, IMapper mapper, 
+            ILogger<LikeService> logger, DataContext context)
         {
             _repo = repo;
             _mapper = mapper;
+            _context = context;
             _logger = logger;
         }
         
@@ -31,7 +36,10 @@ namespace Khabarho.Services.LikeService
             try
             {
                 model.CreatedDate = DateTime.Now;
+                
                 var like = _mapper.Map<Like>(model);
+                like.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == model.UserId);
+                
                 var result = await _repo.InsertAsync(like);
                 
                 if (!result)

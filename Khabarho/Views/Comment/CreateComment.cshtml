@@ -1,0 +1,21 @@
+﻿@using Khabarho.ViewModels.PostViewModels
+@using System
+@model Khabarho.ViewModels.CommentViewModels.CommentViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = null;
+    var postId = ViewData["PostId"];
+}
+
+<form asp-action = "CreateComment" asp-controller = "Comment" method="post">
+    <div class="bg-light">
+        <div>
+            <textarea class="form-control shadow-none textarea" asp-for="Text"></textarea>
+        </div>
+        <input value="@postId" type="hidden" asp-for="PostId"/>
+        <div class="mt-2 text-right">
+            <button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button>
+        </div>
+    </div>
+</form>
