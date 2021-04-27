@@ -1,19 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Khabarho.Extensions;
-using Khabarho.Services.TypeService;
+using Khabarho.Services.CategoryService;
 using Khabarho.Utilities;
-using Khabarho.ViewModels.TypeViewModels;
+using Khabarho.ViewModels.CategoryViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
-    public class TypeController : Controller
+    public class CategoryController : Controller
     {
-        private ITypeService _service;
+        private ICategoryService _service;
 
-        public TypeController(ITypeService service)
+        public CategoryController(ICategoryService service)
         {
             _service = service;
         }
@@ -27,7 +26,7 @@ namespace Khabarho.Controllers
         
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create(TypeViewModel model)
+        public async Task<IActionResult> Create(CategoryViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -35,19 +34,20 @@ namespace Khabarho.Controllers
             }
             
             var result = await _service.CreateAsync(model);
-
-            return RedirectToAction("GetAll", "Type");
+        
+            return RedirectToAction("GetAll", "Category");
+        
         }
         
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
         {
-            var types = await _service.GetAllAsync();
-
-            types.CustomNullCheck(ErrorMessages.NotFoundError);
+            var categories = await _service.GetAllAsync();
+        
+            categories.CustomNullCheck(ErrorMessages.NotFoundError);
             
-            return View(types);
+            return View(categories);
         }
         
         [HttpGet]
@@ -55,12 +55,12 @@ namespace Khabarho.Controllers
         public async Task<IActionResult> GetById(string id)
         {
             id.CustomNullCheck(ErrorMessages.NullParameterError);
-
-            var type = await _service.GetAsync(id);
+        
+            var category = await _service.GetAsync(id);
             
-            type.CustomNullCheck(ErrorMessages.NotFoundError);
+            category.CustomNullCheck(ErrorMessages.NotFoundError);
             
-            return View(type);
+            return View(category);
         }
         
         [HttpGet]
@@ -72,7 +72,7 @@ namespace Khabarho.Controllers
         
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(TypeViewModel model)
+        public async Task<IActionResult> Update(CategoryViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -80,11 +80,10 @@ namespace Khabarho.Controllers
             }
             
             await _service.UpdateAsync(model);
-
-            return RedirectToAction("GetAll", "Type");
+        
+            return RedirectToAction("GetAll", "Category");
         }
         
-                
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
@@ -92,8 +91,8 @@ namespace Khabarho.Controllers
             id.CustomNullCheck(ErrorMessages.NullParameterError);
             
             await _service.DeleteAsync(id);
-
-            return RedirectToAction("GetAll", "Type");
+        
+            return RedirectToAction("GetAll", "Category");
         }
     }
 }

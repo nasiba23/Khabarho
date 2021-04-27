@@ -1,0 +1,23 @@
+﻿@model Khabarho.ViewModels.CategoryViewModels.CategoryViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Название</th>
+      <th scope="col">Дата создания</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">@Model.Id</th>
+      <td>@Model.Title</td>
+      <td>@Model.CreatedDate</td>
+    </tr>
+  </tbody>
+</table>

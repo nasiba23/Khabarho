@@ -1,0 +1,16 @@
+﻿@model Khabarho.ViewModels.CategoryViewModels.CategoryViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<div>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title" class="form-label">Название категории</label>
+                <input class="form-control" id="title" asp-for="Title"/>
+            </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
