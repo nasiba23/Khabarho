@@ -34,8 +34,8 @@ namespace Khabarho.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("~/Comment/DeleteComment")]
-        public async Task<IActionResult> DeleteComment(CommentViewModel model)
+        [Route("~/Comment/DeleteAsync")]
+        public async Task<IActionResult> DeleteAsync(CommentViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -46,7 +46,24 @@ namespace Khabarho.Controllers
 
             await _commentService.DeleteAsync(model.Id.ToString());
             
-            return RedirectToAction("ShowPost", "Post", new {id = model.PostId});
+            return Json(new { success = "done"});
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("~/Comment/EditAsync")]
+        public async Task<IActionResult> EditAsync(CommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ShowPost", "Post");
+            }
+            
+            model.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var result = await _commentService.UpdateAsync(model);
+
+            return Json(result);
         }
     }
 }

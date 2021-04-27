@@ -98,6 +98,9 @@ namespace Khabarho.Services.CommentService
             try
             {
                 var comment = _mapper.Map<Comment>(model);
+                
+                comment.User = await _context.Users.FirstOrDefaultAsync(u => u.Id == model.UserId);
+
                 var result = await _updatableRepo.UpdateAsync(comment);
                 
                 if (!result)

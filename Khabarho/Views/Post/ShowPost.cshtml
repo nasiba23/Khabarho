@@ -42,69 +42,177 @@
         <br>
         <div class="bg-white">
             <div class="d-flex flex-row fs-12 mb-1">
-                <div class="like cursor"><i class="fa fa-thumbs-up" aria-hidden="true"></i><span class="ml-1">Лайк</span></div>
+                <btn id="likeBtn" class="like cursor"><i id="likeIcon" class="fa fa-thumbs-o-up "></i><span class="ml-1">Лайк</span></btn>
                 <div class="like cursor ml-2"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="ml-1">Комментарий</span></div>
             </div>
             @await Html.PartialAsync("~/Views/Comment/CreateComment.cshtml", ViewData)
         </div>
         <h4>Комментарии @post.NumberOfComments</h4>
         <br>
-        @foreach (var comment in post.Comments)
-        {
-            <div class="d-flex flex-column">
-                <div>
-                    <form id="formComment">
-                        <b>@comment.User.UserName</b><span> @comment.CreatedDate</span>
-                        <p>
-                            @comment.Text
-                        </p>    
-                        <input id="textComment" value="@comment.Text" type="hidden"/>
+        <div id="comments">
+            @foreach (var comment in post.Comments)
+            {
+                <div class="d-flex flex-column">
+                    
+                        <form id="formComment" data-comment-id = "@comment.Id">
+                            <b>@comment.User.UserName</b><span> @comment.CreatedDate</span>
+                            <p data-id = "commentText">
+                                @comment.Text
+                            </p>
+                                @if (comment.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                                {                   
+                                        <input id="textComment" value="@comment.Text" type="hidden"/>
+                                        <input id="commentId" value="@comment.Id" type="hidden"/>
+                                        <input id="userId" value="@comment.UserId" type="hidden"/>
+                                        <input id="postId" value="@comment.PostId" type="hidden"/>
+                                        <div class="mt-2 text-md-right d-inline-flex">
+                                                <button id="buttonEdit" class="btn btn-primary btn-sm shadow-none fa fa-pencil" type="submit"></button>
+                                                <button id="buttonDelete" class="btn btn-danger btn-sm shadow-none fa fa-trash ml-2" type="submit"></button>
+                                        </div>
+                                }
                         
-                        @if (comment.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier))
-                        {
-                            <input id="commentId" value="@comment.Id" type="hidden"/>
-                            <input id="userId" value="@comment.UserId" type="hidden"/>
-                            <input id="postId" value="@comment.PostId" type="hidden"/>
-                            <div class="mt-2 text-right">
-                                <button class="btn btn-primary btn-sm shadow-none fa fa-pencil" type="submit"></button>
-                            </div>
-                            <div class="mt-2 text-right">
-                                <button class="btn btn-primary btn-sm shadow-none fa fa-trash" type="submit" onclick="DeleteComment()"></button>
-                            </div>
-                        }
-                    </form>
+                        </form>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 
 @section Scripts
 {
     <script type="text/javascript">
-    function DeleteComment() {
-           const id = $("#commentId").val();
-           const userId = $("#userId").val();
-           const postId = $("#postId").val();
-           const text =  $("#textComment").val();
-           const commentModel = {
-             id : id,
-             userId : userId,
-             postId : postId,
-             text : text,
+    
+       const formButton = document.querySelector("#comments");
+       formButton.addEventListener('submit', (event) => {
+               event.preventDefault();
+               const currentFormEl = event.target;
+               const buttonSubmitter = event.submitter;
+               if (buttonSubmitter != null) {
+                      const idEl =  currentFormEl.children[4];
+                      const userIdEl = currentFormEl.children[5];
+                      const postIdEl = currentFormEl.children[6];
+                      const textEl =  currentFormEl.children[3];
+                      const commentModel = {
+                                   id : idEl.value,
+                                   userId : userIdEl.value,
+                                   postId : postIdEl.value,
+                                   text : textEl.value,
+                                 };
+                      if (buttonSubmitter.id === "buttonDelete") {
+                           DeleteComment(commentModel);    
+                      }
+                      if (buttonSubmitter.id === "buttonEdit") {
+                           EditComment(commentModel, event.target);
+                      }
+              }
+         }, false);
+        
+       const likeIconEl = document.querySelector("#likeIcon");
+       
+       const likeBtnEl = document.querySelector("#likeBtn");
+       likeBtnEl.addEventListener('click', (evt) => {
+           LikeBtn();    
+       });
+       
+       
+       function LikeBtn(){
+             likeIconEl.className === "fa fa-thumbs-up"? 
+                                     likeIconEl.className = "fa fa-thumbs-o-up" : 
+                                     likeIconEl.className = "fa fa-thumbs-up";
+            // LikeCheck();
+       }
+       
+       
+       function LikeCheck(){
+           const likeModel = {
+              userId : '@User.FindFirstValue(ClaimTypes.NameIdentifier)',
+              postId : '@post.Id',
            };
             $.ajax({
                 type:"post",
-                url: "/Comment/DeleteComment",
+                url: "/Like/Check",
+                dataType : "json",
+                data : {model : likeModel},
+                success : function (result, status, xhr) {
+                    result.isLiked === true ? 
+                        likeIconEl.className = "fa fa-thumbs-o-up" : 
+                        likeIconEl.className = "fa fa-thumbs-up";
+                },
+                error : function(xhr, status, error) {
+                    console.log(xhr);
+                }      
+            })    
+       }
+       
+       LikeCheck();
+       
+       function DeleteComment(commentModel) {    
+            $.ajax({
+                type:"post",
+                url: "/Comment/DeleteAsync",
                 dataType : "json",
                 data : {model : commentModel},
                 success : function (result, status, xhr) {
-                console.log(result);
+                    location.reload();
                 },
-                error : function(xhr, status, error) {
-                console.log(xhr);
-                }      
+                error : function(xhr, status, error) {}      
+            })
+       }
+       function EditComment(commentModel, parentEl) {
+             console.log(parentEl.children);
+             let pText = parentEl.querySelector(`[data-id="commentText"]`);
+             let pTextContent = pText.textContent;
+
+             const pTextSibling = pText.previousSibling;
+             pText = parentEl.removeChild(pText);
+             
+             const editCommentEl = document.createElement('form');
+             pTextSibling.before(editCommentEl);
+             
+             
+             const editInputCommentEl = document.createElement('textArea');
+             editInputCommentEl.className = 'form-control shadow-none textarea';
+             editInputCommentEl.textContent = pTextContent.trim();
+             editCommentEl.append(editInputCommentEl);
+             
+             const editCommentButtonSendEl = document.createElement('button');
+             editCommentButtonSendEl.className = 'btn btn-success btn-sm mt-2 shadow-none';
+             editCommentButtonSendEl.textContent = 'Сохранить';
+             editCommentButtonSendEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                commentModel.text = editInputCommentEl.value;
+                EditCommentSendRequest(commentModel);
              })
-           }
+             
+             const editCommentButtonCancelEl = document.createElement('button');
+             editCommentButtonCancelEl.className = 'btn btn-primary btn-sm mt-2 ml-2 shadow-none'
+             editCommentButtonCancelEl.textContent = 'Отмена';
+             editCommentButtonCancelEl.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 CancelEdit(pTextSibling, pText, editCommentEl, parentEl);
+             }, false);
+             
+             
+             editCommentEl.append(editCommentButtonSendEl);
+             editCommentEl.append(editCommentButtonCancelEl);
+             
+       }
+       function CancelEdit(siblingEl, oldEl, newEl, parent){
+             parent.removeChild(newEl);
+             siblingEl.after(oldEl);
+       }
+       function EditCommentSendRequest(commentModel) {
+           $.ajax({
+                type:"post",
+                url: "/Comment/EditAsync",
+                dataType : "json",
+                data : {model : commentModel},
+                success : function (result, status, xhr) {
+                    location.reload();
+                },
+                error : function(xhr, status, error) {}      
+            })  
+       }
+    
     </script>
 }
 }
