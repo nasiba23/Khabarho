@@ -103,8 +103,6 @@ namespace Khabarho.Services
                     option => option.MapFrom(m => m.CreatedDate))
                 .ForMember(m => m.UserId,
                     option => option.MapFrom(m => m.UserId))
-                .ForMember(m => m.UserName,
-                    option => option.MapFrom(m => m.User.UserName))
                 .ForMember(m => m.PostId,
                     option => option.MapFrom(m => m.PostId))
                 .ReverseMap();

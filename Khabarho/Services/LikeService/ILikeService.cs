@@ -12,6 +12,8 @@ namespace Khabarho.Services.LikeService
 
         public Task<List<LikeViewModel>> GetAllAsync();
         
-        public Task<bool> DeleteAsync(string id);
+        public Task<bool> DeleteAsync(LikeViewModel model);
+
+        public bool LikeCheck(LikeViewModel model);
     }
 }

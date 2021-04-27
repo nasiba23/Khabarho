@@ -52,9 +52,9 @@ namespace Khabarho.Controllers
             
             model.AuthorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             
-            await _postService.CreateAsync(model);
+            var result = await _postService.CreateAsync(model);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("ShowPost", "Post", new {id = result.Id});
         }
 
         [HttpGet]

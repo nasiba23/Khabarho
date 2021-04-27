@@ -91,12 +91,13 @@ namespace Khabarho.Services.LikeService
             return likeViewModel;
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(LikeViewModel model)
         {
             var result = false;
+            
             try
             {
-                var like = await _repo.GetAsync(id);
+                var like = await _context.Likes.FirstOrDefaultAsync(x => x.UserId == model.UserId && x.PostId == model.PostId);
                 result = await _repo.DeleteAsync(like);
             }
             catch (Exception e)
@@ -105,6 +106,16 @@ namespace Khabarho.Services.LikeService
             }
 
             return result;
+        }
+
+        public bool LikeCheck(LikeViewModel model)
+        {
+            var result = _context.Posts.SelectMany(x => x.Likes).Any(x => x.UserId == model.UserId && x.PostId == model.PostId);
+            if (result)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

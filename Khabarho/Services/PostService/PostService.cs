@@ -50,8 +50,8 @@ namespace Khabarho.Services.PostService
                     imagePath = await CopyFileAsync(model.ImageFile);
                 }
                 
-                model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
-                model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
+                // model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
+                // model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
                 
                 var post = _mapper.Map<Post>(model);
                 

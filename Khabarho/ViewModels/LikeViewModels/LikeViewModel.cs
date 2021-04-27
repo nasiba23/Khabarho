@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Khabarho.ViewModels.LikeViewModels
 {
@@ -7,11 +8,11 @@ namespace Khabarho.ViewModels.LikeViewModels
         public Guid Id { get; set; }
         
         public DateTime CreatedDate  {get; set; }
-
+        
+        [Required]
         public string UserId { get; set; }
         
-        public string UserName { get; set; }
-
+        [Required]
         public Guid PostId { get; set; }
     }
 }

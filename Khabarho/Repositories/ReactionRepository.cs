@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Khabarho.Db;
+using Khabarho.Extensions;
 using Khabarho.Models;
 using Khabarho.Models.PostModels;
+using Khabarho.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Khabarho.Repositories
@@ -13,9 +15,6 @@ namespace Khabarho.Repositories
     {
         private readonly DataContext _context;
         private readonly DbSet<T> _table;
-        
-        private const string NotFoundError = "Упс, что-то пошло не так. Попробуйте снова :)";
-        private const string NullParameterError = "Упс, что-то пошло не так. Попробуйте снова :)";
 
         public ReactionRepository(DataContext context)
         {
@@ -26,40 +25,29 @@ namespace Khabarho.Repositories
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             var result = await _table.ToListAsync();
-
-            if (!result.Any())
-            {
-                throw new ArgumentNullException(null, NotFoundError);
-            }
+            
+            result.CustomNullCheck(ErrorMessages.NullParameterError);
             
             return result;
         }
 
         public async Task<T> GetAsync(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
+            id.CustomNullCheck(ErrorMessages.NullParameterError);
             
             var result = await _table.FirstOrDefaultAsync(x => x.Id.Equals(Guid.Parse(id)));
-
-            if (result == null)
-            {
-                throw new ArgumentNullException(null, NotFoundError);
-            }
+            
+            result.CustomNullCheck(ErrorMessages.NullParameterError);
 
             return result;
         }
 
         public async Task<bool> InsertAsync(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
+            entity.CustomNullCheck(ErrorMessages.NullParameterError);
 
             await _table.AddAsync(entity);
+            
             var result = await _context.SaveChangesAsync();
             
             return result > 0;
@@ -67,10 +55,7 @@ namespace Khabarho.Repositories
 
         public async Task<bool> DeleteAsync(T entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(null, NullParameterError);
-            }
+            entity.CustomNullCheck(ErrorMessages.NullParameterError);
 
             _table.Remove(entity);
             var result = await _context.SaveChangesAsync();

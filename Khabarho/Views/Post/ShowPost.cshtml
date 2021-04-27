@@ -115,10 +115,25 @@
        
        
        function LikeBtn(){
-             likeIconEl.className === "fa fa-thumbs-up"? 
-                                     likeIconEl.className = "fa fa-thumbs-o-up" : 
-                                     likeIconEl.className = "fa fa-thumbs-up";
-            // LikeCheck();
+           const likeModel = {
+              userId : '@User.FindFirstValue(ClaimTypes.NameIdentifier)',
+              postId : '@post.Id',
+           };
+            $.ajax({
+                type:"post",
+                url: "/Like/Click",
+                dataType : "json",
+                data : {model : likeModel},
+                success : function (result, status, xhr) {
+                    result.isLiked === true ? 
+                        likeIconEl.className = "fa fa-thumbs-up"
+                        : likeIconEl.className = "fa fa-thumbs-o-up" ;
+                    location.reload();
+                },
+                error : function(xhr, status, error) {
+                    console.log(xhr);
+                }      
+            });
        }
        
        
@@ -133,14 +148,13 @@
                 dataType : "json",
                 data : {model : likeModel},
                 success : function (result, status, xhr) {
-                    result.isLiked === true ? 
-                        likeIconEl.className = "fa fa-thumbs-o-up" : 
-                        likeIconEl.className = "fa fa-thumbs-up";
+                    result.isLiked === true ? likeIconEl.className = "fa fa-thumbs-up" 
+                    : likeIconEl.className = "fa fa-thumbs-o-up";
                 },
                 error : function(xhr, status, error) {
                     console.log(xhr);
                 }      
-            })    
+            });
        }
        
        LikeCheck();
