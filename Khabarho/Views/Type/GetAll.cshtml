@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
+    Layout = "_LayoutAdmin";
 }
 
 <div>
@@ -15,13 +15,16 @@
     <th scope="col">Id</th>
     <th scope="col">Название</th>
     <th scope="col">Дата создания</th>
+    <th> </th>
+    <th> </th>
+    <th> </th>
   </tr>
   </thead>
   @foreach (var type in Model)
   {
     <tbody>
     <tr>
-      <th scope="row">@type.Id</th>
+      <td>@type.Id</td>
       <td>@type.Title</td>
       <td>@type.CreatedDate</td>
       <td>
@@ -31,7 +34,7 @@
         <input type="button" class="btn btn-danger btn-sm" value="Удалить" onclick="location.href='@Url.Action("Delete", "Type")?id=@type.Id'">
       </td>
       <td>
-        <input type="button" class="btn btn-secondary" value="Просмотреть" onclick="location.href='@Url.Action("GetById", "Type")?id=@type.Id'">
+        <input type="button" class="btn btn-secondary btn-sm" value="Просмотреть" onclick="location.href='@Url.Action("GetById", "Type")?id=@type.Id'">
       </td>
     </tr>
     </tbody>

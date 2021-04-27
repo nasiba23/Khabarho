@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Khabarho.Services.CategoryService;
@@ -71,5 +72,39 @@ namespace Khabarho.Controllers
             
             return View();
         }
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAllByUserId()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var posts = await _postService.GetAllAsync();
+            
+            var filteredPosts = posts.Where(x => x.AuthorId.ToString() == userId);
+
+            return View(posts);
+        }
+        //
+        // [HttpGet]
+        // [Authorize]
+        // public IActionResult Update(string id)
+        // {
+        //     return View();
+        // }
+        
+        // [HttpPost]
+        // [Authorize()]
+        // public async Task<IActionResult> Update(PostViewModel model)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return View(model);
+        //     }
+        //     
+        //     await _postService.UpdateAsync(model);
+        //
+        //     return RedirectToAction("GetAll", "Category");
+        // }
     }
 }

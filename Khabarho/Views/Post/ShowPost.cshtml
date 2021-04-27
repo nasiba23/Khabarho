@@ -3,7 +3,7 @@
 
 @{
     ViewBag.Title = "title";
-    var post = ViewBag.Post as ShowPostViewModel;
+    var post = ViewBag.Post as PostViewModel;
     Layout = "_Layout";
     ViewData["PostId"] = post?.Id;
 }

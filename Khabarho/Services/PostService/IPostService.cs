@@ -7,13 +7,13 @@ namespace Khabarho.Services.PostService
 {
     public interface IPostService
     {
-        public Task<ShowPostViewModel> CreateAsync(PostViewModel model);
+        public Task<PostViewModel> CreateAsync(PostViewModel model);
 
-        public Task<ShowPostViewModel> GetAsync(string id);
+        public Task<PostViewModel> GetAsync(string id);
 
-        public Task<List<ShowPostViewModel>> GetAllAsync();
+        public Task<List<PostViewModel>> GetAllAsync();
 
-        public Task<ShowPostViewModel> UpdateAsync(PostViewModel model);
+        public Task<PostViewModel> UpdateAsync(PostViewModel model);
 
         public Task<bool> DeleteAsync(string id);
     }

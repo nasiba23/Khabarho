@@ -36,9 +36,9 @@ namespace Khabarho.Services.PostService
             _webHostEnvironment = webHostEnvironment;
         }
         
-        public async Task<ShowPostViewModel> CreateAsync(PostViewModel model)
+        public async Task<PostViewModel> CreateAsync(PostViewModel model)
         {
-            var showPostViewModel = new ShowPostViewModel();
+            var postViewModel = new PostViewModel();
             
             try
             {
@@ -50,8 +50,11 @@ namespace Khabarho.Services.PostService
                     imagePath = await CopyFileAsync(model.ImageFile);
                 }
                 
-                // model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
-                // model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
+                //didn't map
+                model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
+                model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
+                var author = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.AuthorId);
+                model.AuthorName = author.UserName;
                 
                 var post = _mapper.Map<Post>(model);
                 
@@ -61,58 +64,58 @@ namespace Khabarho.Services.PostService
                 
                 if (!result)
                 {
-                    return new ShowPostViewModel();
+                    return new PostViewModel();
                 }
                 
-                showPostViewModel = _mapper.Map<ShowPostViewModel>(post);
+                postViewModel = _mapper.Map<PostViewModel>(post);
             }
             catch (Exception e)
             {
                 _logger.LogInformation(e.Message);
             }
 
-            return showPostViewModel;
+            return postViewModel;
         }
 
-        public async Task<ShowPostViewModel> GetAsync(string id)
+        public async Task<PostViewModel> GetAsync(string id)
         {
-            var showPostViewModel = new ShowPostViewModel();
+            var postViewModel = new PostViewModel();
             
             try
             { 
                 var post = await _repo.GetAsync(id);
                 
-                showPostViewModel = _mapper.Map<ShowPostViewModel>(post);
+                postViewModel = _mapper.Map<PostViewModel>(post);
             }
             catch (Exception e)
             {
                 _logger.LogInformation(e.Message);
             }
 
-            return showPostViewModel;
+            return postViewModel;
         }
 
-        public async Task<List<ShowPostViewModel>> GetAllAsync()
+        public async Task<List<PostViewModel>> GetAllAsync()
         {
-            var showPostsViewModel = new List<ShowPostViewModel>();
+            var postsViewModel = new List<PostViewModel>();
             
             try
             {
                 var posts = await _repo.GetAllAsync();
 
-                showPostsViewModel = posts.Select(c=> _mapper.Map<ShowPostViewModel>(c)).ToList();;
+                postsViewModel = posts.Select(c=> _mapper.Map<PostViewModel>(c)).ToList();;
             }
             catch (Exception e)
             {
                 _logger.LogInformation(e.Message);
             }
 
-            return showPostsViewModel;
+            return postsViewModel;
         }
 
-        public  async Task<ShowPostViewModel> UpdateAsync(PostViewModel model)
+        public  async Task<PostViewModel> UpdateAsync(PostViewModel model)
         {
-            var showPostViewModel = new ShowPostViewModel();
+            var postViewModel = new PostViewModel();
             
             try
             {
@@ -121,17 +124,17 @@ namespace Khabarho.Services.PostService
                 
                 if (!result)
                 {
-                    return new ShowPostViewModel();
+                    return new PostViewModel();
                 }
                 
-                showPostViewModel = _mapper.Map<ShowPostViewModel>(post);
+                postViewModel = _mapper.Map<PostViewModel>(post);
             }
             catch (Exception e)
             {
                 _logger.LogInformation(e.Message);
             }
 
-            return showPostViewModel;
+            return postViewModel;
         }
 
         public async Task<bool> DeleteAsync(string id)
