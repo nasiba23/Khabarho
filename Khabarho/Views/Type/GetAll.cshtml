@@ -1,0 +1,35 @@
+﻿@model ICollection<Khabarho.ViewModels.TypeViewModels.TypeViewModel>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Название</th>
+    <th scope="col">Дата создания</th>
+  </tr>
+  </thead>
+  @foreach (var type in Model)
+  {
+    <tbody>
+    <tr>
+      <th scope="row">@type.Id</th>
+      <td>@type.Title</td>
+      <td>@type.CreatedDate</td>
+      <td>
+        <input type="button" class="btn btn-primary btn-sm" value="Редактировать" onclick="location.href='@Url.Action("Update", "Type")?id=@type.Id'">
+      </td>
+      <td>
+        <input type="button" class="btn btn-danger btn-sm" value="Удалить" onclick="location.href='@Url.Action("Delete", "Type")?id=@type.Id'">
+      </td>
+      <td>
+        <input type="button" class="btn btn-secondary" value="Просмотреть" onclick="location.href='@Url.Action("GetById", "Type")?id=@type.Id'">
+      </td>
+    </tr>
+    </tbody>
+  }
+</table>
