@@ -1,0 +1,55 @@
+﻿@using Khabarho.ViewModels.CategoryViewModels
+@using Khabarho.ViewModels.TypeViewModels
+@model Khabarho.ViewModels.PostViewModels.PostViewModel
+
+@{
+    ViewBag.Title = "Создать пост";
+    Layout = "_Layout";
+    var categories = ViewBag.Categories as List<CategoryViewModel>;
+    var types = ViewBag.Types as List<TypeViewModel>;
+}
+
+<div>
+    <form asp-action="Update" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input asp-for="Id" value="@Model.Id" type="hidden"/>
+            <div class="mb-3">
+                <label for="title" class="form-label">Заголовок</label>
+                <input class="form-control" id="title" asp-for="Title" value="@Model.Title"/>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Категории</label>
+                <select class="custom-select" multiple data-live-search="true" id="category" asp-for="CategoriesId">
+                    @if (categories != null)
+                    {
+                        @foreach (var category in categories)
+                        {
+                            <option value="@category.Id">@category.Title</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="type" class="form-label">Тип</label>
+                <select class="form-control" id="type" asp-for="TypeId">
+                    @if (types != null)
+                    {
+                        @foreach (var type in types)
+                        {
+                            <option value="@type.Id">@type.Title</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ImageFile"></label>
+                <input asp-for="ImageFile" type="file" accept="image/*" class="form-control-file">
+            </div>
+            <div class="mb-3">
+                <label for="text" class="form-label">Текст</label>
+                <textarea class="form-control" id="text" asp-for="Text">@Model.Text</textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>

@@ -3,9 +3,11 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Khabarho.Extensions;
 using Khabarho.Services.CategoryService;
 using Khabarho.Services.PostService;
 using Khabarho.Services.TypeService;
+using Khabarho.Utilities;
 using Khabarho.ViewModels.PostViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -79,32 +81,51 @@ namespace Khabarho.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var posts = await _postService.GetAllAsync();
-            
-            var filteredPosts = posts.Where(x => x.AuthorId.ToString() == userId);
+            var posts = (await _postService.GetAllAsync()).Where(x => x.AuthorId.ToString() == userId).ToList();
 
             return View(posts);
         }
-        //
-        // [HttpGet]
-        // [Authorize]
-        // public IActionResult Update(string id)
-        // {
-        //     return View();
-        // }
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Update(string id)
+        {
+                        
+            var categories = await _categoryService.GetAllAsync();
+            var types = await _typeService.GetAllAsync();
+            ViewBag.Categories = categories;
+            ViewBag.Types = types;
+
+            var post = await _postService.GetAsync(id);
+            
+            return View(post);
+        }
         
         // [HttpPost]
-        // [Authorize()]
+        // [Authorize]
         // public async Task<IActionResult> Update(PostViewModel model)
         // {
         //     if (!ModelState.IsValid)
         //     {
         //         return View(model);
         //     }
-        //     
+        //
+        //     model.AuthorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //
         //     await _postService.UpdateAsync(model);
         //
-        //     return RedirectToAction("GetAll", "Category");
+        //     return RedirectToAction("GetAllByUserId", "Post");
         // }
+        
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
+        {
+            id.CustomNullCheck(ErrorMessages.NullParameterError);
+
+            await _postService.DeleteAsync(id);
+        
+            return RedirectToAction("GetAllByUserId", "Post");
+        }
     }
 }

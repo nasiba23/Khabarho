@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Khabarho.Db;
+using Khabarho.Extensions;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
 using Khabarho.Services.TypeService;
@@ -54,9 +55,11 @@ namespace Khabarho.Services.PostService
                 model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
                 model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
                 var author = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.AuthorId);
+                
                 model.AuthorName = author.UserName;
                 
                 var post = _mapper.Map<Post>(model);
+                post.Author = author;
                 
                 post.Image = imagePath ?? "";
                 
@@ -119,7 +122,29 @@ namespace Khabarho.Services.PostService
             
             try
             {
+                string imagePath = null;
+
+                if (model.ImageFile != null)
+                {
+                    imagePath = await CopyFileAsync(model.ImageFile);
+                }
+                
+                //didn't map
+                model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
+                model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
+                var author = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.AuthorId);
+                
+                model.AuthorName = author.UserName;
+                
+                //to update categories in many-to-many relationship
+                var oldPost = await _context.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
+                
                 var post = _mapper.Map<Post>(model);
+                post.Author = author;
+                
+                post.Image = imagePath ?? "";
+                
+                
                 var result = await _repo.UpdateAsync(post);
                 
                 if (!result)
