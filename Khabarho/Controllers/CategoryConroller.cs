@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
+    
+    [ServiceFilter(typeof(CustomFilterAttribute))]
     public class CategoryController : Controller
     {
         private ICategoryService _service;

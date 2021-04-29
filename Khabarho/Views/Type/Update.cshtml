@@ -5,21 +5,24 @@
     Layout = "_LayoutAdmin";
 }
 
-<form action="Update" method="post" xmlns="http://www.w3.org/1999/html">
-    <div class="row">
-        <input required autocomplete="off" asp-for="Id" class="form-control" type="hidden" />
-    </div>
-    <div class="row">
-        <div class="col-md-2">Новое название</div>
-        <div class="col-md-4">
-            <input required autocomplete="off" asp-for="Title" class="form-control" type="text"/>
+<div class="mt-4">
+    <form action="Update" method="post" xmlns="http://www.w3.org/1999/html">
+        <div class="row">
+            <input required autocomplete="off" asp-for="Id" class="form-control" type="hidden" />
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-            <input class="btn btn-success" type="submit" value="Save"/>
+        <div class="row">
+            <div class="col-md-2">Новое название</div>
+            <div class="col-md-4">
+                <input required autocomplete="off" asp-for="Title" class="form-control" type="text"/>
+            </div>
         </div>
-    </div>
-</form>
+        <br>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <input class="btn btn-success" type="submit" value="Save"/>
+            </div>
+        </div>
+    </form>
+
+</div>

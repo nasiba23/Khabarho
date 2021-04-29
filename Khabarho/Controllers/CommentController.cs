@@ -2,12 +2,15 @@
 using System.Threading.Tasks;
 using Khabarho.Repositories;
 using Khabarho.Services.CommentService;
+using Khabarho.Utilities;
 using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
+    
+    [ServiceFilter(typeof(CustomFilterAttribute))]
     public class CommentController : Controller
     {
         private ICommentService _commentService;

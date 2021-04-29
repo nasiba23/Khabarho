@@ -17,12 +17,4 @@
       </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-      <None Include="wwwroot\images\upload.png" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\images" />
-    </ItemGroup>
-
 </Project>

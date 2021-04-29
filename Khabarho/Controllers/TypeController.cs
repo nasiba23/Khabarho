@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
+    
+    [ServiceFilter(typeof(CustomFilterAttribute))]
     public class TypeController : Controller
     {
         private ITypeService _service;

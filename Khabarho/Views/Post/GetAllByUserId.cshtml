@@ -5,47 +5,49 @@
     Layout = "_LayoutAdmin";
 }
 
-<div>
-  <input type="button" class="btn btn-success" value="Добавить новый пост" onclick="location.href='@Url.Action("Create", "Post")'"/>
+<div class="mt-4">
+    <div>
+      <input type="button" class="btn btn-success" value="Добавить новый пост" onclick="location.href='@Url.Action("Create", "Post")'"/>
+    </div>
+    <br>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Заголовок</th>
+        <th scope="col">Текст</th>
+        <th scope="col">Тип</th>
+        <th scope="col">Категории</th>
+        <th scope="col">Дата создания</th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+        <th> </th>
+      </tr>
+      </thead>
+      @foreach (var post in Model)
+      {
+        <tbody>
+        <tr>
+          <td>@post.Title</td>
+          <td>@post.Text</td>
+          <td>@post.Type.Title</td>
+          <td>@foreach (var category in post.Categories)
+              {
+                <div>@category.Title</div> 
+              }
+          </td>
+          <td>@post.CreatedDate</td>
+          <td>
+            <input type="button" class="btn btn-primary btn-sm" value="Редактировать" onclick="location.href='@Url.Action("Update", "Post")?id=@post.Id'">
+          </td>
+          <td>
+            <input type="button" class="btn btn-danger btn-sm" value="Удалить" onclick="location.href='@Url.Action("Delete", "Post")?id=@post.Id'">
+          </td>
+          <td>
+            <input type="button" class="btn btn-secondary btn-sm" value="Просмотреть" onclick="location.href='@Url.Action("ShowPost", "Post")?id=@post.Id'">
+          </td>
+        </tr>
+        </tbody>
+      }
+    </table>
 </div>
-<br>
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th scope="col">Заголовок</th>
-    <th scope="col">Текст</th>
-    <th scope="col">Тип</th>
-    <th scope="col">Категории</th>
-    <th scope="col">Дата создания</th>
-    <th> </th>
-    <th> </th>
-    <th> </th>
-    <th> </th>
-  </tr>
-  </thead>
-  @foreach (var post in Model)
-  {
-    <tbody>
-    <tr>
-      <td>@post.Title</td>
-      <td>@post.Text</td>
-      <td>@post.Type.Title</td>
-      <td>@foreach (var category in post.Categories)
-          {
-            <div>@category.Title</div> 
-          }
-      </td>
-      <td>@post.CreatedDate</td>
-      <td>
-        <input type="button" class="btn btn-primary btn-sm" value="Редактировать" onclick="location.href='@Url.Action("Update", "Post")?id=@post.Id'">
-      </td>
-      <td>
-        <input type="button" class="btn btn-danger btn-sm" value="Удалить" onclick="location.href='@Url.Action("Delete", "Post")?id=@post.Id'">
-      </td>
-      <td>
-        <input type="button" class="btn btn-secondary btn-sm" value="Просмотреть" onclick="location.href='@Url.Action("ShowPost", "Post")?id=@post.Id'">
-      </td>
-    </tr>
-    </tbody>
-  }
-</table>

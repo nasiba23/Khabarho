@@ -1,25 +1,28 @@
 ﻿using System.Threading.Tasks;
-using Khabarho.Models;
 using Khabarho.Models.AccountModels;
+using Khabarho.Services.CategoryService;
+using Khabarho.Services.TypeService;
 using Khabarho.Utilities;
-using Khabarho.ViewModels;
 using Khabarho.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
+    [ServiceFilter(typeof(CustomFilterAttribute))]
     public class AccountController : Controller
     {
-        private CustomUserManager<User> _userManager;
-        private SignInManager<User> _signInManager;
+        private readonly CustomUserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly ICategoryService _categoryService;
 
-        public AccountController(CustomUserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(ICategoryService categoryService, CustomUserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _categoryService = categoryService;
         }
-
+        
         [HttpGet]
         public IActionResult Register()
         {
@@ -48,7 +51,7 @@ namespace Khabarho.Controllers
             }
             return View(model);
         }
-
+        
         [HttpGet]
         public IActionResult Login(string returnUrl = null)
         {

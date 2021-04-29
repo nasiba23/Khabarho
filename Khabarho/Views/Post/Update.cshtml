@@ -8,7 +8,7 @@
     var types = ViewBag.Types as List<TypeViewModel>;
 }
 
-<div>
+<div class="mt-4">
     <form asp-action="Update" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input asp-for="Id" value="@Model.Id" type="hidden"/>

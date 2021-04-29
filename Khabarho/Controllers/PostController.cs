@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Khabarho.Extensions;
@@ -11,36 +9,30 @@ using Khabarho.Utilities;
 using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
+    [ServiceFilter(typeof(CustomFilterAttribute))]
     public class PostController : Controller
     {
         private IPostService _postService;
         private ICategoryService _categoryService;
         private ITypeService _typeService;
-        private IWebHostEnvironment _webHostEnvironment;
 
         public PostController(IPostService postService, 
                              ICategoryService categoryService, 
-                             ITypeService typeService, IWebHostEnvironment webHostEnvironment)
+                             ITypeService typeService)
         {
             _postService = postService;
             _categoryService = categoryService;
             _typeService = typeService;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var categories = await _categoryService.GetAllAsync();
-            var types = await _typeService.GetAllAsync();
-            ViewBag.Categories = categories;
-            ViewBag.Types = types;
             return View();
         }
 
@@ -90,12 +82,6 @@ namespace Khabarho.Controllers
         [Authorize]
         public async Task<IActionResult> Update(string id)
         {
-                        
-            var categories = await _categoryService.GetAllAsync();
-            var types = await _typeService.GetAllAsync();
-            ViewBag.Categories = categories;
-            ViewBag.Types = types;
-
             var post = await _postService.GetAsync(id);
                 
             return View(post);

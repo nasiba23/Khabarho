@@ -1,12 +1,15 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Khabarho.Services.LikeService;
+using Khabarho.Utilities;
 using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Khabarho.Controllers
 {
+    
+    [ServiceFilter(typeof(CustomFilterAttribute))]
     public class LikeController : Controller
     {
         private ILikeService _service;
