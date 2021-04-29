@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Khabarho.Extensions;
 using Khabarho.Services.TypeService;
 using Khabarho.Utilities;
-using Khabarho.ViewModels.TypeViewModels;
+using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

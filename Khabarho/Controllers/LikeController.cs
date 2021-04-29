@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Khabarho.Services.LikeService;
-using Khabarho.ViewModels.LikeViewModels;
+using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

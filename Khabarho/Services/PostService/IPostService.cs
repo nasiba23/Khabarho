@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Khabarho.Models.PostModels;
-using Khabarho.ViewModels.PostViewModels;
+using Khabarho.ViewModels;
 
 namespace Khabarho.Services.PostService
 {

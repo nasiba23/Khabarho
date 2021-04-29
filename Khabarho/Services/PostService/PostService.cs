@@ -9,7 +9,7 @@ using Khabarho.Extensions;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
 using Khabarho.Services.TypeService;
-using Khabarho.ViewModels.PostViewModels;
+using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -131,14 +131,10 @@ namespace Khabarho.Services.PostService
                 
                 //didn't map
                 model.Type = await _context.Types.FirstOrDefaultAsync(t => t.Id == model.TypeId);
-                model.Categories =  await _context.Categories.Where(c => model.CategoriesId.Contains(c.Id)).ToListAsync();
                 var author = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.AuthorId);
                 
                 model.AuthorName = author.UserName;
-                
-                //to update categories in many-to-many relationship
-                var oldPost = await _context.Posts.FirstOrDefaultAsync(x => x.Id == model.Id);
-                
+
                 var post = _mapper.Map<Post>(model);
                 post.Author = author;
                 

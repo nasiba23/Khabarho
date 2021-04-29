@@ -2,7 +2,7 @@
 using Khabarho.Extensions;
 using Khabarho.Services.CategoryService;
 using Khabarho.Utilities;
-using Khabarho.ViewModels.CategoryViewModels;
+using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

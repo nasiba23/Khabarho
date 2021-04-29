@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Khabarho.Repositories;
-using Khabarho.ViewModels.TypeViewModels;
+using Khabarho.ViewModels;
 using Microsoft.Extensions.Logging;
 using Type = Khabarho.Models.PostModels.Type;
 

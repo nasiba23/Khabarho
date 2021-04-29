@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Khabarho.Models.PostModels;
 
-namespace Khabarho.ViewModels.CategoryViewModels
+namespace Khabarho.ViewModels
 {
     public class CategoryViewModel
     {

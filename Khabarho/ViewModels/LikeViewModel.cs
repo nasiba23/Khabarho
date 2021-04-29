@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Khabarho.ViewModels.LikeViewModels
+namespace Khabarho.ViewModels
 {
     public class LikeViewModel
     {

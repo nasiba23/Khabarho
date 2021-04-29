@@ -1,9 +1,5 @@
 ﻿using Khabarho.Models.PostModels;
-using Khabarho.ViewModels.CategoryViewModels;
-using Khabarho.ViewModels.CommentViewModels;
-using Khabarho.ViewModels.LikeViewModels;
-using Khabarho.ViewModels.PostViewModels;
-using Khabarho.ViewModels.TypeViewModels;
+using Khabarho.ViewModels;
 
 namespace Khabarho.Services
 {

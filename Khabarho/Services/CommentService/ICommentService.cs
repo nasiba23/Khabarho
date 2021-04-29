@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Khabarho.ViewModels.CommentViewModels;
+using Khabarho.ViewModels;
 
 namespace Khabarho.Services.CommentService
 {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Khabarho.Repositories;
 using Khabarho.Services.CommentService;
-using Khabarho.ViewModels.CommentViewModels;
+using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

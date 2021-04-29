@@ -8,7 +8,7 @@ using Khabarho.Services.CategoryService;
 using Khabarho.Services.PostService;
 using Khabarho.Services.TypeService;
 using Khabarho.Utilities;
-using Khabarho.ViewModels.PostViewModels;
+using Khabarho.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -97,25 +97,25 @@ namespace Khabarho.Controllers
             ViewBag.Types = types;
 
             var post = await _postService.GetAsync(id);
-            
+                
             return View(post);
         }
         
-        // [HttpPost]
-        // [Authorize]
-        // public async Task<IActionResult> Update(PostViewModel model)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return View(model);
-        //     }
-        //
-        //     model.AuthorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //
-        //     await _postService.UpdateAsync(model);
-        //
-        //     return RedirectToAction("GetAllByUserId", "Post");
-        // }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Update(PostViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+        
+            model.AuthorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _postService.UpdateAsync(model);
+        
+            return RedirectToAction("GetAllByUserId", "Post");
+        }
         
         [HttpGet]
         [Authorize]

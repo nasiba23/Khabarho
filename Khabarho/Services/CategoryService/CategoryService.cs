@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
-using Khabarho.ViewModels.CategoryViewModels;
-using Khabarho.ViewModels.PostViewModels;
+using Khabarho.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace Khabarho.Services.CategoryService

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Khabarho.ViewModels.LikeViewModels;
+using Khabarho.ViewModels;
 
 namespace Khabarho.Services.LikeService
 {

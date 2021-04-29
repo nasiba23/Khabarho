@@ -1,6 +1,5 @@
-﻿@using Khabarho.ViewModels.CategoryViewModels
-@using Khabarho.ViewModels.TypeViewModels
-@model Khabarho.ViewModels.PostViewModels.PostViewModel
+﻿@using Khabarho.ViewModels
+@model Khabarho.ViewModels.PostViewModel
 
 @{
     ViewBag.Title = "Создать пост";
@@ -18,13 +17,38 @@
                 <input class="form-control" id="title" asp-for="Title" value="@Model.Title"/>
             </div>
             <div class="mb-3">
-                <label for="category" class="form-label">Категории</label>
-                <select class="custom-select" multiple data-live-search="true" id="category" asp-for="CategoriesId">
+                            <label for="category" class="form-label" hidden>Категории</label>
+                            <select class="custom-select" multiple data-live-search="true" id="category" asp-for="CategoriesId" hidden>
+                                @if (categories != null)
+                                {
+                                    @foreach (var category in categories)
+                                    {
+                                        if (@Model.Categories.Any(c => c.Id == category.Id))
+                                        {
+                                            <option value="@category.Id" selected>@category.Title</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@category.Id">@category.Title</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div><div class="mb-3">
+                <label for="category" class="form-label" hidden>Категории</label>
+                <select class="custom-select" multiple data-live-search="true" id="category" asp-for="CategoriesId" hidden>
                     @if (categories != null)
                     {
                         @foreach (var category in categories)
                         {
-                            <option value="@category.Id">@category.Title</option>
+                            if (@Model.Categories.Any(c => c.Id == category.Id))
+                            {
+                                <option value="@category.Id" selected>@category.Title</option>
+                            }
+                            else
+                            {
+                                <option value="@category.Id">@category.Title</option>
+                            }
                         }
                     }
                 </select>
@@ -44,6 +68,9 @@
             <div class="form-group mb-3">
                 <label asp-for="ImageFile"></label>
                 <input asp-for="ImageFile" type="file" accept="image/*" class="form-control-file">
+            </div>
+            <div class="form-group mb-3">
+                <input asp-for="CreatedDate" type="hidden" value="@Model.CreatedDate">
             </div>
             <div class="mb-3">
                 <label for="text" class="form-label">Текст</label>

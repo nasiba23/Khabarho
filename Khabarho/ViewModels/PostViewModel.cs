@@ -5,7 +5,7 @@ using Khabarho.Models.PostModels;
 using Microsoft.AspNetCore.Http;
 using Type = Khabarho.Models.PostModels.Type;
 
-namespace Khabarho.ViewModels.PostViewModels
+namespace Khabarho.ViewModels
 {
     public class PostViewModel
     {

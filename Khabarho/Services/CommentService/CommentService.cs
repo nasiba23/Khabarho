@@ -6,7 +6,7 @@ using AutoMapper;
 using Khabarho.Db;
 using Khabarho.Models.PostModels;
 using Khabarho.Repositories;
-using Khabarho.ViewModels.CommentViewModels;
+using Khabarho.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
