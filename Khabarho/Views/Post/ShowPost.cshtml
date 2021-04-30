@@ -10,7 +10,7 @@
 
 @if (post != null)
 {
-    <div class="mt-4">
+    <div class="mt-4 container_post pb-3">
         <header>
             <a href="">
                 <span>@post.AuthorName</span>
@@ -32,7 +32,7 @@
             }
         </ul>
         <figure>
-            <img src="~/images/@post.ImagePath"/>
+            <img src="~/images/@post.ImagePath" alt="photo"/>
         </figure>
         <div>
             @post.Text

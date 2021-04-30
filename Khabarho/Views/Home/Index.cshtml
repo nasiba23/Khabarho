@@ -27,31 +27,33 @@
         </ul>
     </div>
     <div class="container_post">
-    @foreach (var post in posts)
-    {
-        <div class="card_post">
-            <h1>
-                <a href='@Url.Action("ShowPost", "Post")?id=@post.Id'>
-                    @post.Title
+        @foreach (var post in posts)
+        {
+            <div class="card_post">
+                <h1>
+                    <a href='@Url.Action("ShowPost", "Post")?id=@post.Id'>
+                        @post.Title
+                    </a>
+                </h1>
+                <div class="img_post">
+                       <figure>
+                           <img src="~/images/@post.ImagePath" alt="photo"/>
+                       </figure>
+                </div>
+                <p>
+                    @if (post.Text.Length <= 700)
+                    {
+                        @post.Text
+                    }
+                    else
+                    {
+                        @string.Concat(post.Text.Substring(0, 700), "...")
+                    }
+                </p>
+                <a href= '@Url.Action("ShowPost", "Post")?id=@post.Id' class="btn_detail">
+                    Читать далее
                 </a>
-            </h1>
-            <div class="img_post">
-                <img src="@post.ImagePath" alt="photo">
             </div>
-            <p>
-                @if (post.Text.Length <= 700)
-                {
-                    @post.Text
-                }
-                else
-                {
-                    @string.Concat(post.Text.Substring(0, 700), "...")
-                }
-            </p>
-            <a href= '@Url.Action("ShowPost", "Post")?id=@post.Id' class="btn_detail">
-                Читать далее
-            </a>
-        </div>
-    }
+        }
     </div>
 </div>

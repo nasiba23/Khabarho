@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Khabarho.Models.AccountModels;
 using Khabarho.Services.CategoryService;
 using Khabarho.Services.TypeService;
@@ -6,6 +7,8 @@ using Khabarho.Utilities;
 using Khabarho.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Khabarho.Controllers
 {
@@ -36,6 +39,7 @@ namespace Khabarho.Controllers
             {
                 var user = new User {Email = model.Email, UserName = model.UserName};
                 var result = await _userManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
@@ -71,15 +75,10 @@ namespace Khabarho.Controllers
                     {
                         return Redirect(model.ReturnUrl);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "Home");
+
                 }
-                else
-                {
-                    ModelState.AddModelError("", "Неправильный логин и (или) пароль");
-                }
+                ModelState.AddModelError("", "Неправильный логин и (или) пароль");
             }
             return View(model);
         }
@@ -89,6 +88,29 @@ namespace Khabarho.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetById()
+        {
+            var user =  await _userManager.FindByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            return View(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignOutAsync();
+            }
+            
             return RedirectToAction("Index", "Home");
         }
     }

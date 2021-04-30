@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Khabarho.Db;
 using Khabarho.Extensions;
-using Khabarho.Models;
-using Khabarho.Models.AccountModels;
+using Khabarho.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Khabarho.Utilities
+namespace Khabarho.Models.AccountModels
 {
     public class CustomUserManager<TUSer> : UserManager<User> where TUSer : User
     {

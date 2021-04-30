@@ -2,10 +2,10 @@
 
 @{
     ViewBag.Title = "title";
-    Layout = "_LayoutAdmin";
+    Layout = "_LayoutPersonalAccount";
 }
 
-<div class="mt-4">
+<div class="mt-4 container_post">
     <div>
       <input type="button" class="btn btn-success" value="Добавить новый пост" onclick="location.href='@Url.Action("Create", "Post")'"/>
     </div>

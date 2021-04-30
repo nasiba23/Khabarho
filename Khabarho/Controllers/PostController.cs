@@ -57,6 +57,7 @@ namespace Khabarho.Controllers
         {
             var model = await _postService.GetAsync(id);
             
+            //because id is automatically filled
             if (model.Id == null)
             {
                 return RedirectToAction("Index", "Home");
