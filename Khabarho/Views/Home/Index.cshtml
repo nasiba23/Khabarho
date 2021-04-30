@@ -14,10 +14,6 @@
 <div class="filter">
     <div class="container_post">
         <ul class="filter_container">
-
-            @{
-                System.Diagnostics.Debug.Assert(types != null, nameof(types) + " != null");
-            }
             @foreach (var type in types)
             {
                 <li>

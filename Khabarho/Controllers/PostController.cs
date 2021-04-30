@@ -74,7 +74,9 @@ namespace Khabarho.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var posts = (await _postService.GetAllAsync()).Where(x => x.AuthorId.ToString() == userId).ToList();
+            var posts = (await _postService.GetAllAsync())
+                .Where(x => x.AuthorId.ToString() == userId)
+                .OrderByDescending(x => x.CreatedDate).ToList();
 
             return View(posts);
         }

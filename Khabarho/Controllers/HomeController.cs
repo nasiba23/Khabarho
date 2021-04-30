@@ -31,7 +31,9 @@ namespace Khabarho.Controllers
         
         public async Task<IActionResult> Index()
         {
-            ViewBag.Posts = await _postService.GetAllAsync();
+            ViewBag.Posts = (await _postService.GetAllAsync())
+                .OrderByDescending(x => x.CreatedDate)
+                .ToList();
             
             return View();
         }
